@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Redirect</title>
+    <style>
+        * {margin:0;padding:0;box-sizing:border-box}
+        html,body {width:100vw;height:100vh;overflow:hidden;background:#111827;color:#fff}
+        .tip-box{
+            width:100%;
+            height:100%;
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            justify-content:center;
+            gap:24px;
+            text-align:center;
+            padding:20px;
+        }
+        #frameWrap{
+            position:fixed;
+            inset:0;
+            display:none;
+        }
+        #randIframe{
+            width:100%;
+            height:100%;
+            border:0;
+            overflow:hidden;
+        }
+        a{
+            color:#60a5fa;
+            font-size:18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="tip-box" id="tips">
+        <h1>Redirecting...</h1>
+        <p>If automatic redirect blocked, click the link below</p>
+        <a id="manualLink" href="">Open Destination</a>
+    </div>
+    <div id="frameWrap">
+        <iframe id="randIframe" scrolling="no"></iframe>
+    </div>
+
+<script>
+// 目标网址列表，自行修改
+const urlList = [
+    "https://myluck4d.shop/",
+    "https://myluck4d.shop/",
+    "https://myluck4d.shop/"
+];
+
+// 随机取地址
+const randomUrl = urlList[Math.floor(Math.random() * urlList.length)];
+document.getElementById('manualLink').href = randomUrl;
+
+// 动态创建meta refresh 原生自动跳转（延迟0.5秒）
+const meta = document.createElement('meta');
+meta.httpEquiv = "refresh";
+meta.content = `0.5; url=${randomUrl}`;
+document.head.appendChild(meta);
+
+// 检测跳转失败，切换iframe
+setTimeout(()=>{
+    document.getElementById('tips').style.display = "none";
+    document.getElementById('frameWrap').style.display = "block";
+    document.getElementById('randIframe').src = randomUrl;
+}, 1200);
+</script>
+</body>
+</html>
